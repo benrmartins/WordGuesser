@@ -1,17 +1,16 @@
-import java.util.Objects;
 import java.util.Random;
 import java.util.ArrayList;
 public class Game {
 
     private static String[] playableWords = new String[] {"guessing", "these", "words", "is", "very", "easy"};
-    private static int MaxIncorrectGuesses = 7;
+    public static int MaxIncorrectGuesses = 7;
     private static Random rand = new Random();
     private static ArrayList<String> letters = new ArrayList<String>();
     private static String word = "";
     private static String guessedWord = "";
 
     public static String getWord() {
-        word =  playableWords[rand.nextInt(playableWords.length)];
+        word = playableWords[rand.nextInt(playableWords.length)];
         return word;
     }
 
@@ -29,28 +28,31 @@ public class Game {
         return str;
     }
 
-    public static String replace(String letter) {
-        if(word.indexOf(letter) != -1 && letter.length() == 1) {
-            for(int i = 0; i < word.length(); i++) {
-                if(Objects.equals(word.charAt(i), letter)) {
-                    letters.set(i, letter);
-                    return "You Guessed the correct letter!";
+    public static Boolean replace(char letter) {
+        boolean bool = true;
+        if (word.indexOf(letter) != -1) {
+            for (int i = 0; i < word.length(); i++)
+                if(word.charAt(i) == letter) {
+                    String s = "" + letter;
+                    letters.set(i, s);
                 }
+            } else {
+                MaxIncorrectGuesses--;
+                bool = false;
             }
+        return bool;
         }
-        MaxIncorrectGuesses--;
-        return "You Guessed A Incorrect letter!";
-    }
 
-    public static String win() {
+
+    public static boolean win() {
         for(int i = 0; i < letters.size(); i++) {
             word += letters.get(i);
         }
 
         if(word.equals(guessedWord)) {
-            return "You win!!";
+            return true;
         }
-        return "Please guess another letter again";
+        return false;
     }
 
 
