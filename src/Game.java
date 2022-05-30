@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 
 public class Game {
-
     private static String[] playableWords = new String[] {"guessing", "these", "words", "is", "very", "easy"};
     public static int MaxIncorrectGuesses = 7;
     private static Random rand = new Random();
@@ -43,21 +42,21 @@ public class Game {
     }
 
     public static Boolean replace(char letter) {
+        String let = Character.toString(letter).toLowerCase();
         boolean bool = true;
         try {
-            String str = "" + letter;
-            if(repeat(str)) {
+            if(repeat(let)) {
                 System.out.println("You already played this letter");
                 return true;
             }
-            allLetters.add(str);
-            if (word.indexOf(letter) != -1) {
-                for (int i = 0; i < word.length(); i++)
-                    if(word.charAt(i) == Character.toLowerCase(letter)) {
-                        str = "" + letter;
-                        guessedWord += letter;
-                        correctLetters.set(i, str);
+            allLetters.add(let);
+            if (word.indexOf(let) != -1) {
+                for (int i = 0; i < word.length(); i++) {
+                    if (Character.toString(Character.toLowerCase(word.charAt(i))).equals(let.replaceAll("\\s", ""))) {
+                        guessedWord += let;
+                        correctLetters.set(i, let.replaceAll("\\s", "").toLowerCase());
                     }
+                }
             } else {
                 MaxIncorrectGuesses--;
                 bool = false;
@@ -83,12 +82,10 @@ public class Game {
         }
         return false;
     }
-
     public static void clear() {
         MaxIncorrectGuesses = 7;
         word = "";
         guessedWord = "";
         correctLetters.clear();
     }
-
 }

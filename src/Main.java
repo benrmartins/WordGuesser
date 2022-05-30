@@ -39,7 +39,7 @@ public class Main {
             System.out.println("You have " + Game.MaxIncorrectGuesses + " wrong guesses left");
             System.out.println(Game.displayWord());
             System.out.println("Please guess a letter");
-            char letter = scan.next(".").charAt(0);
+            char letter = scan.next().charAt(0);
             if(Game.replace(letter)) {
                 System.out.println("You guessed the correct letter");
             } else {
