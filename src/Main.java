@@ -54,6 +54,7 @@ public class Main {
                 break;
             }
             if(Game.MaxIncorrectGuesses == 0) {
+                System.out.println("You used all of your incorrect guesses. Game Over.");
                 bool = false;
             }
         }

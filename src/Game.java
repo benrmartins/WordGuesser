@@ -8,9 +8,10 @@ public class Game {
 
     private static String[] playableWords = new String[] {"guessing", "these", "words", "is", "very", "easy"};
     public static int MaxIncorrectGuesses = 7;
-    private static java.util.Random rand = new java.util.Random();
+    private static Random rand = new Random();
     private static String word = "";
-    private static ArrayList<String> letters = new ArrayList<String>();
+    private static ArrayList<String> correctLetters = new ArrayList<String>();
+    private static ArrayList<String> allLetters = new ArrayList<String>();
     private static String guessedWord = "";
 
     public static String getWord() {
@@ -20,38 +21,42 @@ public class Game {
 
     public static void createWord(String word) {
         for(int i = 0; i < word.length(); i++) {
-            letters.add("_");
+            correctLetters.add("_");
         }
     }
 
     public static String displayWord() {
         String str = "";
-        for(String letter : letters) {
+        for(String letter : correctLetters) {
             str += letter + " ";
         }
         return str;
     }
 
-    public static String repeat(String str) {
-        for(String letter : letters) {
+    public static boolean repeat(String str) {
+        for(String letter : allLetters) {
             if(letter.equals(str)) {
-                return "You already played this letter";
+                return true;
             }
         }
-        return "Valid input";
+        return false;
     }
 
     public static Boolean replace(char letter) {
         boolean bool = true;
         try {
             String str = "" + letter;
-            System.out.println(repeat(str));
+            if(repeat(str)) {
+                System.out.println("You already played this letter");
+                return true;
+            }
+            allLetters.add(str);
             if (word.indexOf(letter) != -1) {
                 for (int i = 0; i < word.length(); i++)
                     if(word.charAt(i) == Character.toLowerCase(letter)) {
                         str = "" + letter;
                         guessedWord += letter;
-                        letters.set(i, str);
+                        correctLetters.set(i, str);
                     }
             } else {
                 MaxIncorrectGuesses--;
@@ -83,7 +88,7 @@ public class Game {
         MaxIncorrectGuesses = 7;
         word = "";
         guessedWord = "";
-        letters.clear();
+        correctLetters.clear();
     }
 
 }
