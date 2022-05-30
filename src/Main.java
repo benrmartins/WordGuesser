@@ -17,6 +17,9 @@ public class Main {
             int userChoice = input.nextInt();
             if (userChoice == 1) {
                 start();
+                Game.clear();
+                Game.createWord(Game.getWord());
+                Game.displayWord();
             } else if (userChoice == 2) {
                 break;
             } else {
@@ -31,6 +34,8 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         boolean bool = true;
         while(bool) {
+            System.out.println("");
+            System.out.println("");
             System.out.println("You have " + Game.MaxIncorrectGuesses + " wrong guesses left");
             System.out.println(Game.displayWord());
             System.out.println("Please guess a letter");
@@ -41,8 +46,12 @@ public class Main {
                 System.out.println("There is no " + letter + " in that word");
             }
             if(Game.win()) {
-                System.out.println("You win");
+                Game.win();
+                System.out.println("");
+                System.out.println(Game.displayWord());
+                System.out.println("You win!!!");
                 bool = false;
+                break;
             }
             if(Game.MaxIncorrectGuesses == 0) {
                 bool = false;
